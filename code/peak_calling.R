@@ -1,5 +1,6 @@
 library(exomePeak2)
 library(GenomicFeatures)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 samplenames <- c("NA18486","NA18498","NA18499","NA18501","NA18502","NA18504","NA18505","NA18507","NA18508",
                  "NA18510","NA18511","NA18516","NA18517","NA18519","NA18522","NA18523","NA18852","NA18855",
                  "NA18856","NA18858","NA18861","NA18862","NA18870","NA18907","NA18909","NA18912","NA18913",
@@ -17,11 +18,14 @@ for(i in 1:length(samplenames)){
   IP_data[i] <- paste0("./Lymphoblastoid_cell_line/IP_samples/",samplenames[i],"_IPAligned.sortedByCoord.out.bam")
 }
 
-GENE_ANNO_GTF = "./hg19_GTF/genes.gtf"
+TxDB = TxDb.Hsapiens.UCSC.hg19.knownGene
+
 IP_BAM <- c(IP_data)
 INPUT_BAM <- c(Input_data)
 result =exomePeak2(bam_ip = IP_BAM,
            bam_input = INPUT_BAM,
-           gff_dir = GENE_ANNO_GTF,
+           txdb = TxDB,
            genome = "hg19",
-           paired_end = FALSE)
+           paired_end = FALSE,
+           parallel = 20,
+           save_dir="/home/disk3/zhangteng/Lymphoblastoid_cell_line/part_result/single_base_result/exomePeak2/TXDB_anotation/exomePeak2_output")
