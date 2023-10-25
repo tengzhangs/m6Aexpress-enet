@@ -28,4 +28,4 @@ result =exomePeak2(bam_ip = IP_BAM,
            genome = "hg19",
            paired_end = FALSE,
            parallel = 20,
-           save_dir="/home/disk3/zhangteng/Lymphoblastoid_cell_line/part_result/single_base_result/exomePeak2/TXDB_anotation/exomePeak2_output")
+           save_dir="./exomePeak2_output")
