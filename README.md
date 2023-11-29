@@ -14,8 +14,9 @@ install.packages("https://www.bioconductor.org/packages/3.8/bioc/src/contrib/DES
 install.packages("randomForest")
 ```
 ## Dowloand SRAMP for predicting m6A sites in single base resolution
-Go to the webserver: https://www.cuilab.cn/sramp/ and download SRAMP tool
-Require the Perl (version>5.8)
+1. Go to the webserver: https://www.cuilab.cn/sramp/ and download SRAMP tool
+
+2. Require the Perl (version>5.8)
 
 
 
