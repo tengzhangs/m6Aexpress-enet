@@ -92,6 +92,34 @@ nohup perl runsramp.pl ./Lymphoblastoid_cell_line/sequences/new_motif_peak_seq.f
 #### Mapping m6A sites to longest transcriptom
 f1 <- "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/singlebase_m6Asites.txt"
 f2 <- "./exomePeak2/exomePeak2_output/Mod.bed"
-outputfile <- ""./exomePeak2_result/singlebase_m6Asitesmaps.txt"exomePeak2_result/singlebase_m6Asitesmaps.txt"
+outputfile <- "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/singlebase_m6Asitesmaps.txt"
 mapped_LTX_m6A <- mapm6A_LTX(f1=f1,f2=f2,output_file=outputfile) 
 ```
+## Quantifly the methylation level of single-base m6A sites
+```r
+####Firstly,we should obtain the reads count of each m6A sites in single base
+library(GenomicRanges)
+samplenames <- c("NA18486","NA18498","NA18499","NA18501","NA18502","NA18504","NA18505","NA18507","NA18508",
+                 "NA18510","NA18511","NA18516","NA18517","NA18519","NA18522","NA18523","NA18852","NA18855",
+                 "NA18856","NA18858","NA18861","NA18862","NA18870","NA18907","NA18909","NA18912","NA18913",
+                 "NA18916","NA19092","NA19093","NA19098","NA19099","NA19101","NA19102","NA19108","NA19114",
+                 "NA19116","NA19119","NA19127","NA19128","NA19130","NA19131","NA19137","NA19138","NA19140",
+                 "NA19143","NA19144","NA19147","NA19152","NA19153","NA19159","NA19160","NA19192","NA19193",
+                 "NA19200","NA19204","NA19209","NA19222","NA19239","NA19257")
+Input_data <- vector()
+for(i in 1:length(samplenames)){
+  Input_data[i] <- paste0("./Lymphoblastoid_cell_line/",samplenames[i],"/",samplenames[i],"Aligned.sortedByCoord.out.bam")
+}
+
+IP_data <- vector()
+for(i in 1:length(samplenames)){
+  IP_data[i] <- paste0("./Lymphoblastoid_cell_line/IP_samples/",samplenames[i],"_IPAligned.sortedByCoord.out.bam")
+}
+ip_bams <- c(IP_data)
+input_bams <- c(Input_data)
+
+f1 <- "./exomePeak2_result/singlebase_m6Asitesmaps.txt"
+output_file <-  "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/IP_Input_SBreadsinfor.Rdata"
+get_SBm6A_reads <- getSB_m6A_readscount(ip_bams=ip_bams,input_bams=input_bams,m6A_site_file=f1,output_file=output_file)
+```
+
