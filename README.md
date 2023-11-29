@@ -9,7 +9,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
 BiocManager::install(c("Rsamtools","GenomicAlignments","GenomicRanges",
-                       "GenomicFeatures","rtracklayer","exomePeak2", "Rsubread"))
+                       "GenomicFeatures","rtracklayer","exomePeak2", "Rsubread","Biostrings","BSgenome.Hsapiens.UCSC.hg19"))
 install.packages("https://www.bioconductor.org/packages/3.8/bioc/src/contrib/DESeq_1.34.1.tar.gz", repos = NULL, type="source")
 install.packages("randomForest")
 ```
@@ -40,7 +40,7 @@ output_dir <- "./Lymphoblastoid_cell_line/gene_express/"
 get_gene_expre <- get_gene_express(Input_data,isGTFAnnotationFile=TRUE,GTF.featureType="exon",GTF.attrType="gene_name", annot.ext = gtf, isPairedEnd=F, nthreads=20,output=output_dir)
 ```
 
-## Peak calling by exomePeak
+## Peak calling by exomePeak2
 ```r
 ######Import data
 samplenames <- c("NA18486","NA18498","NA18499","NA18501","NA18502","NA18504","NA18505","NA18507","NA18508",
@@ -62,6 +62,7 @@ for(i in 1:length(samplenames)){
 ##### Get annotation file
 GENE_ANNO_GTF  <- ".hg19_GTF/genes.gtf"
 #### peak calling
+library(exomePeak2)
 IP_BAM <- c(IP_data)
 INPUT_BAM <- c(Input_data)
 result =exomePeak2(bam_ip = IP_BAM,
@@ -71,6 +72,16 @@ result =exomePeak2(bam_ip = IP_BAM,
            paired_end = FALSE,
            parallel = 20,
            save_dir="./Lymphoblastoid_cell_line/exomePeak2_output")
+```
+## Get the sequence of m6A peak
+```r
+library(Biostrings)
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(GenomicRanges)
+import_file <-  "./Lymphoblastoid_cell_line/exomePeak2_output/Mod.csv"
+output_dir <- "./Lymphoblastoid_cell_line/sequences/"
+## get the sequence of m6A peak
+get_peakseq <- get_peak_seq(f1=import_file,output=output_dir)
 ```
 
 
