@@ -83,5 +83,15 @@ output_dir <- "./Lymphoblastoid_cell_line/sequences/"
 ## get the sequence of m6A peak
 get_peakseq <- get_peak_seq(f1=import_file,output=output_dir)
 ```
+## Predict m6A sites in single base by SRAMP
+```r
+#### Obtain m6A sites in single base by SRAMP
+cd ./SRAMP/
+nohup perl runsramp.pl ./Lymphoblastoid_cell_line/sequences/new_motif_peak_seq.fa ./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/singlebase_m6Asites.txt mature &
 
-
+#### Mapping m6A sites to longest transcriptom
+f1 <- "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/singlebase_m6Asites.txt"
+f2 <- "./exomePeak2/exomePeak2_output/Mod.bed"
+outputfile <- ""./exomePeak2_result/singlebase_m6Asitesmaps.txt"exomePeak2_result/singlebase_m6Asitesmaps.txt"
+mapped_LTX_m6A <- mapm6A_LTX(f1=f1,f2=f2,output_file=outputfile) 
+```
