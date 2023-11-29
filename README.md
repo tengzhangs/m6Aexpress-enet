@@ -121,5 +121,8 @@ input_bams <- c(Input_data)
 f1 <- "./exomePeak2_result/singlebase_m6Asitesmaps.txt"
 output_file <-  "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/IP_Input_SBreadsinfor.Rdata"
 get_SBm6A_reads <- getSB_m6A_readscount(ip_bams=ip_bams,input_bams=input_bams,m6A_site_file=f1,output_file=output_file)
+#### Then quantify m6A methylation level and match gene expression
+load( "./Lymphoblastoid_cell_line/exomePeak2_output/exomePeak2_result/IP_Input_SBreadsinfor.Rdata")
+library(reshape2)
 ```
 
